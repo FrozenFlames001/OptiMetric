@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OptiMetric — Vision-Based Metrology</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- OpenCV -->
+  <script src="https://docs.opencv.org/4.x/opencv.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="fluid-background">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <nav>
+    <a href="#" class="brand-logo">
+      <span class="logo-text">OptiMetric</span>
+    </a>
+    <div class="nav-links">
+      <a href="#research">Research</a>
+      <a href="#demo">Demo</a>
+      <a href="#about">About Us</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Vision Based<br>Metrology System</h1>
+      <p class="hero-subtitle">
+        Making quality control accessible by turning a smartphone into an accurate, non-contact measurement tool
+      </p>
+
+      <!-- Interactive Demo Area (CV Tool) -->
+      <div class="demo-card" id="demo">
+        <div class="demo-header">
+          <h3>Live Inspection</h3>
+          <div id="confidence-display" class="hidden">
+            <span class="confidence-label">Confidence</span>
+            <div class="confidence-meter">
+              <div id="confidence-fill" style="width: 0%"></div>
+            </div>
+            <span id="confidence-value">0%</span>
+          </div>
+        </div>
+
+        <div class="img-frame">
+          <p class="hint">Place reference coin (24mm) & object in frame</p>
+          <img id="preview" class="hidden" alt="Inspection Preview" />
+        </div>
+
+        <div class="controls-bar">
+          <!-- Hidden Inputs -->
+          <input type="file" accept="image/*" capture="environment" id="masterInput" class="hidden">
+          <input type="file" accept="image/*" capture="environment" id="productInput" class="hidden">
+
+          <button id="masterBtn" class="pill-btn primary">
+            <span class="status-light active" id="masterLight"></span>
+            <span>📸 Capture Master</span>
+          </button>
+          <button id="productBtn" class="pill-btn secondary" disabled>
+            <span class="status-light" id="productLight"></span>
+            <span>🔍 Inspect Product</span>
+          </button>
+        </div>
+
+        <div id="status">System Ready. Load Master Reference.</div>
+      </div>
+    </section>
+
+    <!-- Key Features moved up -->
+    <section class="features-section">
+      <h3>Key Features</h3>
+      <div class="features-list">
+        <div class="feature-tag">Cost Effective</div>
+        <div class="feature-tag">Cross Platform</div>
+        <div class="feature-tag">High Accuracy</div>
+        <div class="feature-tag">Instant Reporting</div>
+      </div>
+    </section>
+
+    <!-- Content Sections -->
+    <div class="grid-content" id="vision">
+      <div class="card intro-card">
+        <h2>The Problem: The Precision Gap</h2>
+        <p>Precision manufacturing currently relies on industrial-grade Coordinate Measuring Machines (CMM) that require
+          high capital investment and specialized labor. For Micro, Small, and Medium Enterprises (MSMEs), this cost is
+          a barrier to entry, forcing reliance on manual, error-prone measurement processes that increase waste and slow
+          production.</p>
+      </div>
+      <div class="card solution-card">
+        <h2>The Solution: Democratized Quality Control</h2>
+        <p>Our project introduces a Non-Contact, Automated Inspection Framework that transforms a standard smartphone
+          into a high-precision measurement tool. By combining a 3D-printed standardized inspection rig with advanced
+          Computer Vision (CV), we enable real-time, on-site tolerance checking.</p>
+      </div>
+    </div>
+
+    <section class="tech-section" id="research">
+      <h2>Research Foundation</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <h4>System Calibration</h4>
+          <p>Utilizing a 24.0mm reference object to establish precise pixel-to-metric ratios.</p>
+        </div>
+        <div class="tech-item">
+          <h4>Image Processing</h4>
+          <p>Implementing Otsu’s Binarization and Morphological Closing to isolate complex workpiece profiles from
+            background noise.</p>
+        </div>
+        <div class="tech-item">
+          <h4>Comparative Analysis</h4>
+          <p>Real-time geometric benchmarking against a "Master" reference model.</p>
+        </div>
+        <div class="tech-item">
+          <h4>Pass/Fail Logic</h4>
+          <p>An automated decision engine with a 95% match threshold for immediate industrial validation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <h2>About Us</h2>
+      <p class="about-summary">
+        Our system offers an affordable measurement solution for MSMEs by turning everyday smartphones into accurate
+        inspection tools. Using technologies like OpenCV and LiDAR, the application analyzes object contours in real
+        time and checks whether they meet required tolerances. This non-contact approach helps close the gap between
+        costly industrial equipment and easy-to-use, decentralized quality control.
+      </p>
+    </section>
+
+    <section id="history-section" class="hidden" style="max-width: 800px; margin: 0 auto 80px; padding: 0 20px;">
+      <h2>Inspection History</h2>
+      <div class="table-container">
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Image</th>
+              <th>Match Score</th>
+              <th>Status</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody id="history-body">
+            <!-- Rows injected via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 OptiMetric Systems. Powered by OpenCV/JS.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -61,7 +61,11 @@ function handleImage(e, isMaster) {
       if (isMaster) {
         masterPerimeter = perimeter;
         productBtn.disabled = false;
-        statusText.innerHTML = `✅ MASTER stored`;
+        statusText.innerHTML = `
+          <div class="status-big">
+            <div class="status-verdict status-master-text">MASTER STORED</div>
+          </div>
+        `;
 
         // Switch Lights
         if (masterLight && productLight) {
@@ -70,8 +74,18 @@ function handleImage(e, isMaster) {
         }
       } else {
         const match = computeMatch(perimeter, masterPerimeter);
-        const verdict = match >= PASS_THRESHOLD ? "PASS ✅" : "FAIL ❌";
-        statusText.innerHTML = `${verdict} — <span style="color:var(--text-main)">${match.toFixed(2)}% match</span>`;
+        const verdict = match >= PASS_THRESHOLD ? "PASS" : "FAIL";
+        const verdictClass = match >= PASS_THRESHOLD ? "status-pass-text" : "status-fail-text";
+
+        statusText.innerHTML = `
+          <div class="status-big">
+            <div class="status-verdict ${verdictClass}">${verdict}</div>
+            <div class="match-percent">
+              <span>Match Score:</span>
+              <span class="match-value">${match.toFixed(2)}%</span>
+            </div>
+          </div>
+        `;
 
         // Add to History
         addToHistory(img.src, match, match >= PASS_THRESHOLD, perimeter, masterPerimeter);

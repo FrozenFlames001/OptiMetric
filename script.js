@@ -3,7 +3,7 @@
 // -----------------------------
 const COIN_DIAMETER_MM = 24.0;
 const MIN_CONTOUR_AREA = 500;
-const PASS_THRESHOLD = 95.0;
+const PASS_THRESHOLD = 97.0;
 
 // -----------------------------
 // STATE
